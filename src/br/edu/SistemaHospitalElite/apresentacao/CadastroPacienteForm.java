@@ -7,12 +7,20 @@ package br.edu.SistemaHospitalElite.apresentacao;
 
 import br.edu.SistemaHospitalElite.negocio.CampoObrigatorioException;
 import br.edu.SistemaHospitalElite.negocio.PacienteBO;
+import br.edu.SistemaHospitalElite.negocio.RelatorioBO;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -24,6 +32,7 @@ public class CadastroPacienteForm extends javax.swing.JFrame {
     private List<Paciente> pacientes;
     private Paciente filtro;
     private AlteraPacienteForm alterarPacienteForm;
+    private List<Relatorio> listaPaciente;
     
 
      public CadastroPacienteForm() throws SQLException {
@@ -261,11 +270,15 @@ public class CadastroPacienteForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        /*try {
+        
+        try {
             this.gerarRelatorio();
         } catch (SQLException ex) {
             Logger.getLogger(CadastroPacienteForm.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
+        } catch (JRException ex) {
+            Logger.getLogger(CadastroPacienteForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -379,7 +392,7 @@ public class CadastroPacienteForm extends javax.swing.JFrame {
         
     }
 
-    /*private void gerarRelatorio() throws SQLException {
+    private void gerarRelatorio() throws SQLException, JRException {
         RelatorioBO relatorioBO = new RelatorioBO();
         this.listaPaciente = relatorioBO.buscarPaciente();
         
@@ -401,7 +414,7 @@ public class CadastroPacienteForm extends javax.swing.JFrame {
             Logger.getLogger(CadastroPacienteForm.class.getName()).log(Level.SEVERE, null, ex);
 
         }
-    }*/
+    }
 
     private void carregarTabela() {
         PacienteBO pacienteBO = new PacienteBO();
@@ -473,6 +486,7 @@ public class CadastroPacienteForm extends javax.swing.JFrame {
         }
 
     }
+    
      private class Model extends AbstractTableModel {
 
         public int getRowCount() {
